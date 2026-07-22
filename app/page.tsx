@@ -4,3 +4,4 @@ import { getKitchenQueue } from "@/services/dashboard.service";
 export default function Home() {
   redirect("/dashboard");
 }
+
