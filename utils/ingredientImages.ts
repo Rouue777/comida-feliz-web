@@ -7,5 +7,8 @@ export const ingredientImages: Record<string, string> = {
     "Arroz": "/ingredients/arroz.jpg",
     "Macarrão": "/ingredients/macarrao.jpg",
     "Salada" : "/ingredients/Salada.jpg",
-    "Assado de Boi" : "/ingredients/assadodeboi.jpg"
+    "Assado de Boi" : "/ingredients/assadodeboi.jpg",
+    "Coca-Cola" : "/ingredients/Coca-cola.jpg",
+    "Pudim":"/ingredients/pudim.jpg",
+    "Suco":"/ingredients/suco.jpg"
 };

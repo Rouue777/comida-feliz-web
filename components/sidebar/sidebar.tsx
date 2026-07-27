@@ -27,10 +27,6 @@ export function Sidebar() {
           Produtos
         </Link>
 
-        <Link href="/categorias">
-          Categorias
-        </Link>
-
       </nav>
     </aside>
   );
