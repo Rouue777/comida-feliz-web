@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { CreateOrderDto } from "@/types/createOrderDto";
 import { AsyncCallbackSet } from "next/dist/server/lib/async-callback-set";
 
 //pegar pedidos recentes
@@ -34,6 +35,24 @@ export async function updateOrderStatus(
     const response = await api.patch(`/orders/${id}/status`, {
         status,
     });
+
+    return response.data;
+
+}
+
+//pegar preco da marmita
+export async function MealPrice() {
+
+  const response = await api.get("orders/meal/prices")
+
+  return response.data
+}
+
+
+//criar pedido 
+export async function createOrder(data: CreateOrderDto) {
+
+    const response = await api.post("/orders", data);
 
     return response.data;
 

@@ -8,3 +8,18 @@ export type Product = {
         name: string;
     };
 };
+
+
+export type OrderExtraDraft = {
+    productId: string;
+    productName: string;
+    quantity: number;
+    unitPrice: number;
+    subtotal: number;
+}
+
+
+export type CreateOrderExtraDto = {
+    productId: string;
+    quantity: number;
+};

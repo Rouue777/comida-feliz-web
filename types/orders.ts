@@ -137,3 +137,18 @@ interface Payment {
 
   updatedAt: string;
 }
+
+export type OrderType =
+    | "DELIVERY"
+    | "TAKEAWAY"
+    | "DINE_IN";
+
+export type PaymentMethod =
+    | "PIX"
+    | "CASH"
+    | "CREDIT_CARD"
+    | "DEBIT_CARD";
+
+    
+
+

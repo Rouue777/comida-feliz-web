@@ -4,6 +4,8 @@ export interface Ingredient {
 
     name: string;
 
+    type : string;
+
     available: boolean;
 
 }

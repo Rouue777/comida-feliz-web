@@ -9,10 +9,22 @@ import { UpdateStatusModal } from "@/components/orders/updateStatusModal";
 import { updateOrderStatus } from "@/services/orders.service";
 import { OrderFilters } from "@/components/orders/OrderFilters";
 import { OrderPagination } from "@/components/orders/OrderPagination";
+import { SearchCustomerModal } from "@/components/orders/SearchCustomerModal";
+import { CreateCustomerModal } from "@/components/orders/CreateCustomerModal";
+import { Customer } from "@/types/customer";
+import { CreateOrderModal } from "@/components/orders/CreateOrderModal";
 
 
 
 export default function OrdersPage() {
+
+    //estados para modal criacao de pedidos
+    const [customer, setCustomer] = useState<Customer | null>(null);
+    const [customerPhone, setCustomerPhone] = useState("");
+    const [searchCustomerModalOpen, setSearchCustomerModalOpen] = useState(false);
+    const [createCustomerModalOpen, setCreateCustomerModalOpen] = useState(false);
+    const [createOrderModalOpen, setCreateOrderModalOpen] = useState(false);
+
     //estados da pagina para gerenciamento da paginacao
     const [orders, setOrders] = useState<Order[]>([]);
 
@@ -99,27 +111,27 @@ export default function OrdersPage() {
 
     }
 
+    async function loadOrders() {
+
+        const response = await getAllOrders({
+
+            phone,
+            status,
+            date,
+            page,
+            limit: 10,
+
+        });
+
+        setOrders(response.data);
+
+        setTotalPages(response.totalPages);
+
+    }
+
     useEffect(() => {
 
-        async function load() {
-
-            const response = await getAllOrders({
-
-                phone,
-                status,
-                date,
-                page,
-                limit: 10,
-
-            });
-
-            setOrders(response.data);
-
-            setTotalPages(response.totalPages);
-
-        }
-
-        load();
+        loadOrders();
 
     }, [phone, status, date, page]);
 
@@ -127,15 +139,26 @@ export default function OrdersPage() {
 
         <div className="space-y-8">
 
-            <div>
+            <div className="flex items-center justify-between">
 
-                <h1 className="text-4xl font-bold">
-                    Pedidos
-                </h1>
+                <div>
 
-                <p className="text-gray-500 mt-2">
-                    Gerencie todos os pedidos do restaurante.
-                </p>
+                    <h1 className="text-4xl font-bold">
+                        Pedidos
+                    </h1>
+
+                    <p className="text-gray-500 mt-2">
+                        Gerencie todos os pedidos do restaurante.
+                    </p>
+
+                </div>
+
+                <button
+                    onClick={() => setSearchCustomerModalOpen(true)}
+                    className="px-5 py-3 bg-green-600 text-white rounded-lg"
+                >
+                    Novo Pedido
+                </button>
 
             </div>
 
@@ -166,12 +189,46 @@ export default function OrdersPage() {
                 onClose={handleClose}
             />
 
-
             <UpdateStatusModal
                 order={selectedOrderStatus}
                 open={statusModalOpen}
                 onClose={handleCloseStatus}
                 onSave={handleSaveStatus}
+            />
+
+            <SearchCustomerModal
+                open={searchCustomerModalOpen}
+                onClose={() => setSearchCustomerModalOpen(false)}
+                onCustomerFound={(customer) => {
+                    setCustomer(customer);
+                    setCreateOrderModalOpen(true);
+                }}
+                onCustomerNotFound={(phone) => {
+                    setCustomerPhone(phone);
+                    setCreateCustomerModalOpen(true);
+                }}
+            />
+
+            <CreateCustomerModal
+                open={createCustomerModalOpen}
+                phone={customerPhone}
+                onClose={() => setCreateCustomerModalOpen(false)}
+                onCreated={(customer) => {
+
+                    setCustomer(customer);
+
+                    setCreateCustomerModalOpen(false);
+
+                    setCreateOrderModalOpen(true);
+
+                }}
+            />
+
+            <CreateOrderModal
+                open={createOrderModalOpen}
+                customer={customer}
+                onClose={() => setCreateOrderModalOpen(false)}
+                onCreated={loadOrders}
             />
         </div>
 
