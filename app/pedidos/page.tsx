@@ -13,6 +13,7 @@ import { SearchCustomerModal } from "@/components/orders/SearchCustomerModal";
 import { CreateCustomerModal } from "@/components/orders/CreateCustomerModal";
 import { Customer } from "@/types/customer";
 import { CreateOrderModal } from "@/components/orders/CreateOrderModal";
+import ProtectedRoute from "@/components/login/ProtectedRoute";
 
 
 
@@ -136,102 +137,103 @@ export default function OrdersPage() {
     }, [phone, status, date, page]);
 
     return (
+        <ProtectedRoute>
 
-        <div className="space-y-8">
+            <div className="space-y-8">
 
-            <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between">
 
-                <div>
+                    <div>
 
-                    <h1 className="text-4xl font-bold">
-                        Pedidos
-                    </h1>
+                        <h1 className="text-4xl font-bold">
+                            Pedidos
+                        </h1>
 
-                    <p className="text-gray-500 mt-2">
-                        Gerencie todos os pedidos do restaurante.
-                    </p>
+                        <p className="text-gray-500 mt-2">
+                            Gerencie todos os pedidos do restaurante.
+                        </p>
+
+                    </div>
+
+                    <button
+                        onClick={() => setSearchCustomerModalOpen(true)}
+                        className="px-5 py-3 bg-green-600 text-white rounded-lg"
+                    >
+                        Novo Pedido
+                    </button>
 
                 </div>
 
-                <button
-                    onClick={() => setSearchCustomerModalOpen(true)}
-                    className="px-5 py-3 bg-green-600 text-white rounded-lg"
-                >
-                    Novo Pedido
-                </button>
+                <OrderFilters
+                    phone={phone}
+                    status={status}
+                    date={date}
+                    onPhoneChange={setPhone}
+                    onStatusChange={setStatus}
+                    onDateChange={setDate}
+                />
 
+                <OrderTable
+                    orders={orders}
+                    onView={handleView}
+                    onEdit={handleEdit}
+                />
+
+                <OrderPagination
+                    page={page}
+                    totalPages={totalPages}
+                    onPageChange={setPage}
+                />
+
+                <OrderDetailsModal
+                    order={selectedOrder}
+                    open={modalOpen}
+                    onClose={handleClose}
+                />
+
+                <UpdateStatusModal
+                    order={selectedOrderStatus}
+                    open={statusModalOpen}
+                    onClose={handleCloseStatus}
+                    onSave={handleSaveStatus}
+                />
+
+                <SearchCustomerModal
+                    open={searchCustomerModalOpen}
+                    onClose={() => setSearchCustomerModalOpen(false)}
+                    onCustomerFound={(customer) => {
+                        setCustomer(customer);
+                        setCreateOrderModalOpen(true);
+                    }}
+                    onCustomerNotFound={(phone) => {
+                        setCustomerPhone(phone);
+                        setCreateCustomerModalOpen(true);
+                    }}
+                />
+
+                <CreateCustomerModal
+                    open={createCustomerModalOpen}
+                    phone={customerPhone}
+                    onClose={() => setCreateCustomerModalOpen(false)}
+                    onCreated={(customer) => {
+
+                        setCustomer(customer);
+
+                        setCreateCustomerModalOpen(false);
+
+                        setCreateOrderModalOpen(true);
+
+                    }}
+                />
+
+                <CreateOrderModal
+                    open={createOrderModalOpen}
+                    customer={customer}
+                    onClose={() => setCreateOrderModalOpen(false)}
+                    onCreated={loadOrders}
+                />
             </div>
-
-            <OrderFilters
-                phone={phone}
-                status={status}
-                date={date}
-                onPhoneChange={setPhone}
-                onStatusChange={setStatus}
-                onDateChange={setDate}
-            />
-
-            <OrderTable
-                orders={orders}
-                onView={handleView}
-                onEdit={handleEdit}
-            />
-
-            <OrderPagination
-                page={page}
-                totalPages={totalPages}
-                onPageChange={setPage}
-            />
-
-            <OrderDetailsModal
-                order={selectedOrder}
-                open={modalOpen}
-                onClose={handleClose}
-            />
-
-            <UpdateStatusModal
-                order={selectedOrderStatus}
-                open={statusModalOpen}
-                onClose={handleCloseStatus}
-                onSave={handleSaveStatus}
-            />
-
-            <SearchCustomerModal
-                open={searchCustomerModalOpen}
-                onClose={() => setSearchCustomerModalOpen(false)}
-                onCustomerFound={(customer) => {
-                    setCustomer(customer);
-                    setCreateOrderModalOpen(true);
-                }}
-                onCustomerNotFound={(phone) => {
-                    setCustomerPhone(phone);
-                    setCreateCustomerModalOpen(true);
-                }}
-            />
-
-            <CreateCustomerModal
-                open={createCustomerModalOpen}
-                phone={customerPhone}
-                onClose={() => setCreateCustomerModalOpen(false)}
-                onCreated={(customer) => {
-
-                    setCustomer(customer);
-
-                    setCreateCustomerModalOpen(false);
-
-                    setCreateOrderModalOpen(true);
-
-                }}
-            />
-
-            <CreateOrderModal
-                open={createOrderModalOpen}
-                customer={customer}
-                onClose={() => setCreateOrderModalOpen(false)}
-                onCreated={loadOrders}
-            />
-        </div>
-
+        </ProtectedRoute>
     );
 
 }

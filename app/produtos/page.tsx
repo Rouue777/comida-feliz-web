@@ -8,6 +8,7 @@ import { getAllProducts } from "@/services/product.service";
 import { Product } from "@/types/product";
 import { ProductGrid } from "@/components/products/ProductGrid";
 import { UpdateAvailabilityModal } from "@/components/products/UpdateAvailabilityModal";
+import ProtectedRoute from "@/components/login/ProtectedRoute";
 
 export default function ProdutosPage() {
 
@@ -48,7 +49,7 @@ export default function ProdutosPage() {
     }, [page]);
 
     return (
-
+        <ProtectedRoute>
         <div className="space-y-8">
 
             <ProductHeader
@@ -75,7 +76,7 @@ export default function ProdutosPage() {
 
             />
         </div>
-
+        </ProtectedRoute>
     );
 
 }

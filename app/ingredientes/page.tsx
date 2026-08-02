@@ -8,6 +8,7 @@ import { Ingredient } from "@/types/ingredients";
 import { getAllIngredients } from "@/services/ingredients.service";
 import { UpdateAvailabilityModal } from "@/components/ingredients/updateAvaliabilityModal";
 import { updateIngredientAvailability } from "@/services/ingredients.service";
+import ProtectedRoute from "@/components/login/ProtectedRoute";
 
 export default function IngredientesPage() {
 
@@ -81,55 +82,55 @@ export default function IngredientesPage() {
 
     }, [page]);
     return (
+        <ProtectedRoute>
+            <div className="space-y-8">
 
-        <div className="space-y-8">
-
-            <IngredientHeader
-                onCreate={() => setCreateModalOpen(true)}
-            />
+                <IngredientHeader
+                    onCreate={() => setCreateModalOpen(true)}
+                />
 
 
-            <CreateIngredientModal
-                open={createModalOpen}
-                onClose={() => setCreateModalOpen(false)}
-                onCreated={loadIngredients}
-            />
+                <CreateIngredientModal
+                    open={createModalOpen}
+                    onClose={() => setCreateModalOpen(false)}
+                    onCreated={loadIngredients}
+                />
 
-            <IngredientGrid
-                ingredients={ingredients}
-                onToggleAvailability={handleToggleAvailability}
-            />
-            <div className="flex justify-center items-center gap-4 mt-8">
+                <IngredientGrid
+                    ingredients={ingredients}
+                    onToggleAvailability={handleToggleAvailability}
+                />
+                <div className="flex justify-center items-center gap-4 mt-8">
 
-                <button
-                    disabled={page === 1}
-                    onClick={() => setPage((prev) => prev - 1)}
-                    className="px-4 py-2 border rounded disabled:opacity-50"
-                >
-                    Anterior
-                </button>
+                    <button
+                        disabled={page === 1}
+                        onClick={() => setPage((prev) => prev - 1)}
+                        className="px-4 py-2 border rounded disabled:opacity-50"
+                    >
+                        Anterior
+                    </button>
 
-                <span>
-                    Página {page} de {totalPages}
-                </span>
+                    <span>
+                        Página {page} de {totalPages}
+                    </span>
 
-                <button
-                    disabled={page === totalPages}
-                    onClick={() => setPage((prev) => prev + 1)}
-                    className="px-4 py-2 border rounded disabled:opacity-50"
-                >
-                    Próxima
-                </button>
+                    <button
+                        disabled={page === totalPages}
+                        onClick={() => setPage((prev) => prev + 1)}
+                        className="px-4 py-2 border rounded disabled:opacity-50"
+                    >
+                        Próxima
+                    </button>
 
+                </div>
+                <UpdateAvailabilityModal
+                    ingredient={selectedIngredient}
+                    open={availabilityModalOpen}
+                    onClose={handleCloseAvailability}
+                    onConfirm={handleConfirmAvailability}
+                />
             </div>
-            <UpdateAvailabilityModal
-                ingredient={selectedIngredient}
-                open={availabilityModalOpen}
-                onClose={handleCloseAvailability}
-                onConfirm={handleConfirmAvailability}
-            />
-        </div>
-
+        </ProtectedRoute>
     );
 
 }
