@@ -2,6 +2,7 @@ import { Order } from "@/types/orders";
 import { OrderStatusBadge } from "./OrderStatusBadge";
 import { OrderActions } from "./OrderActions";
 import { UpdateStatusModal } from "@/components/orders/updateStatusModal";
+import { Card } from "../ui/card";
 
 
 type OrderTableProps = {
@@ -18,16 +19,8 @@ export function OrderTable({
 
     console.log(orders);
     return (
+        <Card>
 
-        <div
-            className="
-                bg-white
-                rounded-xl
-                shadow-md
-                border
-                overflow-hidden
-            "
-        >
 
             <table className="w-full">
 
@@ -149,7 +142,8 @@ export function OrderTable({
 
             </table>
 
-        </div>
+
+        </Card>
 
     );
 

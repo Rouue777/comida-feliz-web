@@ -22,7 +22,7 @@ export function OrderFilters({
         <div
             className="
                 bg-white
-                border
+               
                 rounded-xl
                 shadow-md
                 p-6

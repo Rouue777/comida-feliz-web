@@ -69,6 +69,7 @@ export default function LoginPage() {
 }, [router]);
 
     return (
+        
 
         <main className="min-h-screen bg-gradient-to-br from-orange-100 via-white to-orange-50 flex items-center justify-center px-6">
 

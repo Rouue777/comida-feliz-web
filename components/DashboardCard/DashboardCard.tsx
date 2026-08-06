@@ -1,4 +1,5 @@
 import { LucideIcon } from "lucide-react";
+import { Card } from "../ui/card";
 
 type DashboardCardProps = {
   title: string;
@@ -12,18 +13,8 @@ export function DashboardCard({
   icon: Icon,
 }: DashboardCardProps) {
   return (
-    <div
-      className="
-      bg-white
-      rounded-xl
-      shadow-md
-      p-6
-      border
-      hover:shadow-lg
-      transition
-      duration-300
-      "
-    >
+    <Card>
+
       <div className="flex items-center gap-3">
 
         <Icon
@@ -53,6 +44,7 @@ export function DashboardCard({
       >
         {value}
       </p>
-    </div>
+
+    </Card>
   );
 }

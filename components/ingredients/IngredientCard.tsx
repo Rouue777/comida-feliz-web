@@ -1,3 +1,5 @@
+import { Card } from "../ui/card";
+
 type IngredientCardProps = {
 
     name: string;
@@ -31,15 +33,8 @@ export function IngredientCard({
 
     return (
 
-        <div
-            className="
-                bg-white
-                rounded-xl
-                shadow-md
-                border
-                overflow-hidden
-            "
-        >
+        <Card>
+
 
             <img
                 src={image}
@@ -89,8 +84,8 @@ export function IngredientCard({
 
             </div>
 
-        </div>
-
+        
+                        </Card>
     );
 
 }

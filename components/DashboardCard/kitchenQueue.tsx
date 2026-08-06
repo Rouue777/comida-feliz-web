@@ -1,5 +1,6 @@
 import { KitchenQueueOrder as KitchenQueueType } from "@/types/kitchenQueue";
 import { KitchenQueueItem } from "../DashboardCard/kitchenQueueItem";
+import { Card } from "../ui/card";
 
 type KitchenQueueProps = {
     orders: KitchenQueueType[];
@@ -9,6 +10,7 @@ export function KitchenQueue({
     orders,
 }: KitchenQueueProps) {
     return (
+       
         <div
             className="
                 w-full
@@ -16,7 +18,7 @@ export function KitchenQueue({
                 bg-white
                 rounded-xl
                 shadow-md
-                border
+                
 
                 p-6
 
@@ -70,5 +72,6 @@ export function KitchenQueue({
             </div>
 
         </div>
+     
     );
 }
